@@ -100,11 +100,11 @@ namespace MySQL
                     case "5":
                         running = false;
                         dal.CloseDB();
-                        Console.WriteLine("התוכנית נסגרת.");
+                        Console.WriteLine("The program is closing.");
                         break;
 
                     default:
-                        Console.WriteLine("בחירה לא חוקית, נסה שוב.");
+                        Console.WriteLine("Invalid choice, please try again.");
                         break;
                 }
 

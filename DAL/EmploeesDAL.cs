@@ -27,16 +27,19 @@ namespace MySQL.DAL
         public void AddAgent(Agent agent)
         {
             try
-            {   
-                string AddAgent = "INSERT INTO agents (name_code, real_name," +
-             " current_location,status,missions_competd) VALUES (@name_code, @real_name,@current_location,@status,@missions_competd)";
+            {
+                string AddAgent = "INSERT INTO agents (code_name, real_name, current_location, status, missions_completed) " +
+                  "VALUES (@code_name, @real_name, @current_location, @status, @missions_completed)";
+
+
                 using (cmd = new MySqlCommand(AddAgent, conn))
                 {
                     cmd.Parameters.AddWithValue("@code_name", agent.code_name);
                     cmd.Parameters.AddWithValue("@real_name", agent.real_name);
                     cmd.Parameters.AddWithValue("@current_location", agent.current_location);
                     cmd.Parameters.AddWithValue("@status", agent.status);
-                    cmd.Parameters.AddWithValue("@missions_competd", agent.missions_competd);
+                    cmd.Parameters.AddWithValue("@missions_completed", agent.missions_competd);
+
                     cmd.ExecuteNonQuery();
                     Console.WriteLine("the Agent addiing to DB");
                 }
@@ -55,7 +58,7 @@ namespace MySQL.DAL
                 using (cmd = new MySqlCommand(DeleteAgent, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", agentId);
-                    conn.Open();
+                    
                     int rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected > 0)
                         Console.WriteLine($"הסוכן עם מזהה {agentId} נמחק בהצלחה.");
@@ -67,11 +70,7 @@ namespace MySQL.DAL
             {
                 Console.WriteLine($"err : {e.Message}");
             }
-            finally
-            {
-                if (conn.State == System.Data.ConnectionState.Open)
-                    conn.Close();
-            }
+           
         }
         //-------------------------------------------------------------------------------------------------------------------------------
         public void UpdateAgentLocation(int agentId, string newLocation)
@@ -101,7 +100,7 @@ namespace MySQL.DAL
                 string GetAllAgents = "SELECT * FROM agents ";
                 using (cmd = new MySqlCommand(GetAllAgents, conn))
                 {
-                    conn.Open();
+                    
                     using (reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -110,9 +109,10 @@ namespace MySQL.DAL
                             string real_name = reader.GetString("real_name");
                             string current_location = reader.GetString("current_location");
                             string status = reader.GetString("status");
-                            int missions_competd = reader.GetInt32("missions_competd");
+                            int missions_completed = reader.GetInt32("missions_completed"); 
 
-                            Agent agent = new Agent(code_name, real_name, current_location, status, missions_competd);
+
+                            Agent agent = new Agent(code_name, real_name, current_location, status, missions_completed);
                             agents.Add(agent);
                         }
                     }
@@ -122,11 +122,7 @@ namespace MySQL.DAL
             {
                 Console.WriteLine($"err:{e.Message}");
             }
-            finally
-            {
-                if (conn.State == System.Data.ConnectionState.Open)
-                    conn.Close();
-            }
+            
             return agents;
         }
         //---------------------------------------------------------------------------------------------------------------------------------
