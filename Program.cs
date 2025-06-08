@@ -89,7 +89,7 @@ namespace MySQL
 
 
                     case "4":
-                        // הצגת כל הסוכנים
+                        Console.WriteLine("\n--- All Agents ---\n");
                         var agents = dal.GetAllAgents();
                         foreach (var agent in agents)
                         {

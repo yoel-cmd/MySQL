@@ -61,9 +61,9 @@ namespace MySQL.DAL
                     
                     int rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected > 0)
-                        Console.WriteLine($"הסוכן עם מזהה {agentId} נמחק בהצלחה.");
+                        Console.WriteLine($"the agent  {agentId} delete.");
                     else
-                        Console.WriteLine($"לא נמצא סוכן עם מזהה {agentId}.");
+                        Console.WriteLine($"no found {agentId}.");
                 }
             }
             catch (Exception e)
