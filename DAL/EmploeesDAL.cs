@@ -28,11 +28,11 @@ namespace MySQL.DAL
         {
             try
             {   
-                string AddAgent = "INSERT INTO employees (name_code, real_name," +
+                string AddAgent = "INSERT INTO agents (name_code, real_name," +
              " current_location,status,missions_competd) VALUES (@name_code, @real_name,@current_location,@status,@missions_competd)";
                 using (cmd = new MySqlCommand(AddAgent, conn))
                 {
-                    cmd.Parameters.AddWithValue("@name_code", agent.code_name);
+                    cmd.Parameters.AddWithValue("@code_name", agent.code_name);
                     cmd.Parameters.AddWithValue("@real_name", agent.real_name);
                     cmd.Parameters.AddWithValue("@current_location", agent.current_location);
                     cmd.Parameters.AddWithValue("@status", agent.status);
@@ -129,6 +129,7 @@ namespace MySQL.DAL
             }
             return agents;
         }
+        //---------------------------------------------------------------------------------------------------------------------------------
         public void CloseDB()
         {
             conn.Close();
